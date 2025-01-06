@@ -19,6 +19,9 @@ function App() {
       loop: false,
       autoplay: false,
       path: 'gradient_animation.json',
+      rendererSettings: {
+        preserveAspectRatio: 'none',  // This ensures the animation scales to fit the container without maintaining the aspect ratio
+      }
     });
 
     animation.addEventListener('complete', () => {
@@ -26,15 +29,31 @@ function App() {
     });
 
     gsap.to(".landing-page-container", {
-      opacity: 0, 
+      opacity: 0,
       scrollTrigger: {
         trigger: ".landing-page-container",
         start: "top top",
         end: "bottom top",
-        scrub: true, 
+        scrub: true,
         onUpdate: (self) => {
           animation.goToAndStop(self.progress * animation.totalFrames, true);
         },
+      },
+    });
+
+    ScrollTrigger.create({
+      trigger: "#lottie-animation-container",
+      start: "top top",
+      end: "bottom top",
+      scrub: true,
+      onUpdate: (self) => {
+        animation.goToAndStop(self.progress * animation.totalFrames, true);
+
+        gsap.to(".landing-page", {
+          opacity: 1 - self.progress,
+          filter: `blur(${self.progress * 30}px)`,
+          duration: 0.1,
+        });
       },
     });
 
@@ -64,7 +83,7 @@ function App() {
         <LandingPage />
       </div>
 
-      <div id="lottie-animation-container" style={{ height: '100vh' }}></div>
+      <div id="lottie-animation-container"></div>
 
       <div className="main-page-container">
         <LandingPageMain />
