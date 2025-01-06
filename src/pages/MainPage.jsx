@@ -3,7 +3,7 @@ import ScrollPage from "../components/ScrollPage";
 
 function MainPage() {
     return (
-        <div class="main-page">
+        <div className="main-page">
 
            <Navbar/>
 
@@ -28,7 +28,7 @@ function MainPage() {
             <ScrollPage/>
             
         </div>
-    )
+    );
 }
 
 export default MainPage;
