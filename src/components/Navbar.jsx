@@ -4,45 +4,26 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 function Navbar() {
-
     useEffect(() => {
-
         gsap.registerPlugin(ScrollTrigger);
 
-        gsap.fromTo(
-            ".navbar",
-            {
-                y: -100,
-                opacity: 0,
+        ScrollTrigger.create({
+            trigger: ".scroll-page",
+            start: "top 100%",
+            end: "top 300%",
+            onUpdate: (self) => {
+                const progress = self.progress;
+                const yPosition = -100 + progress * 100;
+                const opacity = progress;
+
+                gsap.to(".navbar", {
+                    y: yPosition,
+                    opacity: opacity,
+                    duration: 0.1,
+                    ease: "power2.out",
+                });
             },
-            {
-                y: 0,
-                opacity: 1,
-                duration: 0.3,
-                ease: "power2.out",
-                scrollTrigger: {
-                    trigger: ".scroll-page",
-                    start: "top 100%",
-                    end: "bottom top",
-                    onEnter: () => {
-                        gsap.to(".navbar", {
-                            y: 0,
-                            opacity: 1,
-                            duration: 0.3,
-                            ease: "power2.out",
-                        });
-                    },
-                    onLeaveBack: () => {
-                        gsap.to(".navbar", {
-                            y: -100,
-                            opacity: 0,
-                            duration: 0.1,
-                            ease: "power2.in",
-                        });
-                    },
-                },
-            }
-        );
+        });
     }, []);
 
     return (

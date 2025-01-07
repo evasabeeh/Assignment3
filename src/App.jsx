@@ -51,7 +51,7 @@ function App() {
 
         gsap.to(".landing-page", {
           opacity: 1 - self.progress,
-          filter: `blur(${self.progress * 30}px)`,
+          filter: `blur(${self.progress * 40}px)`,
           duration: 0.1,
         });
       },
